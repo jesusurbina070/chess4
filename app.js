@@ -15,3 +15,12 @@ class Partida {
     return new Partida();
   }
 }
+
+fetch("server.json")
+  .then((datos) => datos.json())
+  .then((datos) => {
+    datos.jugadores.forEach((jugador) => {
+      console.log(jugador);
+      jugadores.push(new Player(jugador));
+    });
+  });
