@@ -8,6 +8,8 @@
       "derrotas": 0,
       "puntos": 0
     },
-    { "nombre": "chessKing", "victorias": 0, "derrotas": 0, "puntos": 0 }
+    { "nombre": "chessKing", "victorias": 0, "derrotas": 0, "puntos": 0 },
+    { "nombre": "nenoRaptor", "victorias": 0, "derrotas": 0, "puntos": 0 },
+    { "nombre": "halb2008", "victorias": 0, "derrotas": 0, "puntos": 0 }
   ]
 }
