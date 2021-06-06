@@ -18,6 +18,7 @@ class Partida {
   constructor() {
     this.players = [];
     this.movidas = 0;
+    this.start = false;
   }
   iniciarPartida() {}
 }
@@ -126,6 +127,7 @@ function removerAdder(addElement, removeElement) {
 
 function getBack() {
   removerAdder($botones, $jugadores);
+  $partida.classList.toggle("none");
   $back.classList.add("none");
   $lista.innerHTML = `
   <div class="titulo-player">
@@ -133,10 +135,15 @@ function getBack() {
   </div>
   `;
   partida.players = [];
+  if (partida.start == true) {
+    $partida.classList.add("none");
+    partida.start = false;
+  }
 }
 function startMatch() {
   if (partida.players.length == 4) {
     removerAdder($partida, $jugadores);
+    partida.start = true;
   } else {
     alert("Solo se aceptan 4 Jugadores por partida");
   }
