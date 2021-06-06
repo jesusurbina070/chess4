@@ -4,11 +4,40 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg" href="img/tablero.svg" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/svg" href="assets/img/tablero.svg" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/fonts/fuentes.css" />
     <title>Chess4</title>
   </head>
   <body>
-    <script src="app.js"></script>
+    <section class="hero">
+      <div class="botones">
+        <i id="partida">
+          <img src="assets/img/peon.png" alt="" height="100px" width="100px" />
+          <p>Nueva Partida</p>
+        </i>
+        <i id="jugadores">
+          <span class="icon-user"></span>
+          <p>Jugadores</p>
+        </i>
+        <i id="crear">
+          <span class="icon-color_lens"></span>
+          <p>Crear Jugadores</p>
+        </i>
+      </div>
+    </section>
+    <section class="jugadores none">
+      <div class="list">
+        <div class="titulo-player">
+          <h3>Selecciona</h3>
+        </div>
+        <div class="titulos">
+          <p>Jugadores</p>
+          <p>Victorias</p>
+          <p>Derrotas</p>
+        </div>
+      </div>
+    </section>
+    <script src="assets/app.js"></script>
   </body>
 </html>

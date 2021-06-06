@@ -1,0 +1,92 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0px;
+  background-color: #312e2b;
+}
+
+.hero {
+  height: 100vh;
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero.none {
+  display: none;
+}
+.botones {
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  grid-gap: 20px;
+}
+
+i {
+  background-color: #272522;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 25px 30px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+p {
+  color: white;
+}
+span {
+  font-size: 80px;
+  color: #ebe8cd;
+}
+.jugadores {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.jugadores.none {
+  display: none;
+}
+.list {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.titulo-player {
+  padding: 10px 20px;
+  background-color: #272522;
+  color: hsla(0, 0%, 100%, 0.65);
+  margin: 0;
+}
+.titulo-player h3 {
+  font-size: 25px;
+  margin: 0;
+}
+
+.titulos {
+  margin: 0;
+  background-color: #1f1e1b;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.jugador {
+  background-color: #272522;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  padding: 10px 0px;
+  border-top: solid 1px #1f1e1b;
+  cursor: pointer;
+}
+.jugador.select {
+  background-color: #1f1e1b;
+}
+
+.jugador:hover {
+  background-color: #1f1e1b;
+}
