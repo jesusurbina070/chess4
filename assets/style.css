@@ -1,0 +1,159 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0px;
+  background-color: #312e2b;
+}
+
+.hero {
+  height: calc(100vh - 40px);
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero.none {
+  display: none;
+}
+.botones {
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  grid-gap: 20px;
+}
+
+i {
+  background-color: #272522;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 25px 30px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+p {
+  color: white;
+}
+span {
+  font-size: 80px;
+  color: #ebe8cd;
+}
+#back {
+  position: relative;
+  font-size: 50px;
+  margin-left: 40px;
+  top: 50px;
+  cursor: pointer;
+}
+
+.icon-circle-left.none {
+  display: none;
+}
+.jugadores {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.jugadores.none {
+  display: none;
+}
+.list {
+  margin: 0 auto;
+  width: 50%;
+}
+.start {
+  display: none;
+  margin: 20px;
+  background: #ebe8cd;
+  color: #272522;
+  font-weight: bolder;
+  border: none;
+}
+.start.is-active {
+  display: block;
+}
+
+.titulo-player {
+  padding: 10px 20px;
+  background-color: #272522;
+  color: hsla(0, 0%, 100%, 0.65);
+  margin: 0;
+}
+.titulo-player h3 {
+  font-size: 25px;
+  margin: 0;
+}
+
+.titulos {
+  margin: 0;
+  background-color: #1f1e1b;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.jugador {
+  background-color: #272522;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  padding: 10px 0px;
+  border-top: solid 1px #1f1e1b;
+  cursor: pointer;
+}
+.jugador.select {
+  background-color: #1f1e1b;
+}
+
+.jugador:hover {
+  background-color: #1f1e1b;
+}
+
+.partida {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.partida.none {
+  display: none;
+}
+.piezas {
+  display: grid;
+  grid-template-columns: 150px 150px 150px;
+  grid-gap: 18px;
+}
+.pieza {
+  font-size: 50px;
+  margin: 0;
+  color: #ebe8cd;
+}
+.jaque {
+  font-size: 20px;
+  font-weight: bolder;
+  color: #ebe8cd;
+}
+.barra {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.puntos {
+  margin: 10px 20px;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #ebe8cd;
+  cursor: default;
+}
+
+/* azul: #4185bf
+rojo: #bf3b43
+naranja: #c09526
+verde: #4e9161 */

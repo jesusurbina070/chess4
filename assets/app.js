@@ -19,13 +19,29 @@ class Partida {
     this.players = [];
     this.movidas = 0;
   }
+  iniciarPartida() {}
 }
+
+const reglas = {
+  paso: 0,
+  peon: 1,
+  caballo: 3,
+  arfil: 5,
+  torre: 5,
+  dama: 9,
+  rey: 20,
+  jaqueDoble: 5,
+  jaqueTriple: 20,
+};
 const $botones = document.querySelector(".hero");
 const $jugadores = document.querySelector(".jugadores");
+const $partida = document.querySelector(".partida");
 
 const $botonPartida = document.getElementById("partida");
 const $botonJugadores = document.getElementById("jugadores");
 const $botonCrear = document.getElementById("crear");
+const $back = document.getElementById("back");
+const $start = document.querySelector(".start");
 
 const $lista = document.querySelector(".list");
 
@@ -33,14 +49,16 @@ let partida;
 const jugadores = [];
 
 $botonJugadores.addEventListener("click", () => {
+  $back.classList.remove("none");
+  removerAdder($jugadores, $botones);
   jugadores.forEach((jugador) => {
     mostrarHTML($lista, jugador);
-    removerAdder($jugadores, $botones);
   });
 });
 
 $botonPartida.addEventListener("click", () => {
   removerAdder($jugadores, $botones);
+  $back.classList.remove("none");
   partida = new Partida();
   jugadores.forEach((jugador) => {
     mostrarHTML($lista, jugador);
@@ -58,15 +76,26 @@ $botonPartida.addEventListener("click", () => {
           );
           partida.players = newPlayers;
         }
-        console.log(partida.players);
       } else {
         player.classList.add("select");
         agregarJugador(player);
         console.log(partida.players);
       }
+      debugger;
+      if (partida.players.length == 4) {
+        $start.classList.add("is-active");
+      }
+      if (partida.players.length < 4) {
+        if ($start.classList.contains("is-active")) {
+          $start.classList.remove("is-active");
+        }
+      }
     });
   });
 });
+
+$back.addEventListener("click", getBack);
+$start.addEventListener("click", startMatch);
 
 fetch("assets/server.json")
   .then((datos) => datos.json())
@@ -93,4 +122,22 @@ function agregarJugador(element) {
 function removerAdder(addElement, removeElement) {
   addElement.classList.remove("none");
   removeElement.classList.add("none");
+}
+
+function getBack() {
+  removerAdder($botones, $jugadores);
+  $back.classList.add("none");
+  $lista.innerHTML = `
+  <div class="titulo-player">
+    <h3>Selecciona</h3>
+  </div>
+  `;
+  partida.players = [];
+}
+function startMatch() {
+  if (partida.players.length == 4) {
+    removerAdder($partida, $jugadores);
+  } else {
+    alert("Solo se aceptan 4 Jugadores por partida");
+  }
 }

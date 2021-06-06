@@ -10,7 +10,7 @@
     <title>Chess4</title>
   </head>
   <body>
-    <span class="icon-circle-left"></span>
+    <span id="back" class="icon-circle-left none"></span>
     <section class="hero">
       <div class="botones">
         <i id="partida">
@@ -38,7 +38,37 @@
           <p>Derrotas</p>
         </div>
       </div>
+      <i class="start">Start</i>
     </section>
+    <section class="partida none">
+      <div class="barra">
+        <i class="puntos">Player1</i>
+        <i class="puntos">Player2</i>
+      </div>
+      <div class="piezas">
+        <i id="pieza" class="fas fa-chess-pawn pieza" data-price="peon"></i>
+        <i
+          id="pieza"
+          class="fas fa-chess-knight pieza"
+          data-price="caballo"
+        ></i>
+        <i id="pieza" class="fas fa-chess-bishop pieza" data-price="arfil"></i>
+        <i id="pieza" class="fas fa-chess-rook pieza" data-price="torre"></i>
+        <i id="pieza" class="fas fa-chess-queen pieza" data-price="reyna"></i>
+        <i id="pieza" class="fas fa-chess-king pieza" data-price="rey"></i>
+        <i id="pieza" class="jaque" data-price="dobleJaque">Doble Jaque</i>
+        <i id="pieza" class="jaque" data-price="tripleJaque">Triple Jaque</i>
+        <i id="pieza" class="jaque" data-price="paso">Paso</i>
+      </div>
+      <div class="barra">
+        <i class="puntos">Player3</i>
+        <i class="puntos">Player4</i>
+      </div>
+    </section>
+    <script
+      src="https://kit.fontawesome.com/3b975b15a8.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="assets/app.js"></script>
   </body>
 </html>
