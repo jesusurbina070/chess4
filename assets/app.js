@@ -78,9 +78,11 @@ $botonPartida.addEventListener("click", () => {
           partida.players = newPlayers;
         }
       } else {
-        player.classList.add("select");
-        agregarJugador(player);
-        console.log(partida.players);
+        if (partida.players.length < 4) {
+          player.classList.add("select");
+          agregarJugador(player);
+          console.log(partida.players);
+        }
       }
       if (partida.players.length == 4) {
         $start.classList.add("is-active");
@@ -131,6 +133,11 @@ function getBack() {
   <div class="titulo-player">
     <h3>Selecciona</h3>
   </div>
+          <div class="titulos">
+          <p>Jugadores</p>
+          <p>Victorias</p>
+          <p>Derrotas</p>
+  </div>
   `;
   $start.classList.remove("is-active");
   partida.players = [];
@@ -143,7 +150,5 @@ function startMatch() {
   if (partida.players.length == 4) {
     removerAdder($partida, $jugadores);
     partida.start = true;
-  } else {
-    alert("Solo se aceptan 4 Jugadores por partida");
   }
 }

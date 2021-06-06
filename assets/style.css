@@ -90,7 +90,7 @@ span {
 
 .titulos {
   margin: 0;
-  background-color: #1f1e1b;
+  background-color: #181712;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -103,6 +103,7 @@ span {
   justify-content: space-around;
   text-align: center;
   padding: 10px 0px;
+  margin-bottom: ;
   border-top: solid 1px #1f1e1b;
   cursor: pointer;
 }
