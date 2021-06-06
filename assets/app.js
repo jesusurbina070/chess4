@@ -82,7 +82,6 @@ $botonPartida.addEventListener("click", () => {
         agregarJugador(player);
         console.log(partida.players);
       }
-      debugger;
       if (partida.players.length == 4) {
         $start.classList.add("is-active");
       }
