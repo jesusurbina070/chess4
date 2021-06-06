@@ -127,13 +127,13 @@ function removerAdder(addElement, removeElement) {
 
 function getBack() {
   removerAdder($botones, $jugadores);
-  $partida.classList.toggle("none");
   $back.classList.add("none");
   $lista.innerHTML = `
   <div class="titulo-player">
     <h3>Selecciona</h3>
   </div>
   `;
+  $start.classList.remove("is-active");
   partida.players = [];
   if (partida.start == true) {
     $partida.classList.add("none");
