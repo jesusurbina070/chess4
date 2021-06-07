@@ -179,7 +179,6 @@ function getBack() {
   }
 }
 function startMatch() {
-  debugger;
   removerAdder($partida, $jugadores);
   partida.start = true;
   ramdomArray(partida.players);
