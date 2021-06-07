@@ -19,8 +19,26 @@ class Partida {
     this.players = [];
     this.movidas = 0;
     this.start = false;
+    this.turno = 0;
   }
-  iniciarPartida() {}
+  Partida() {}
+  mostrarPuntos() {
+    $puntos.forEach((e, p) => {
+      this.players.forEach((elemento, index) => {
+        if (p == index) {
+          e.textContent = elemento.nombre;
+          elegirColores(index, e);
+          if (elemento.puntos > 0) {
+            e.textContent = `${elemento.puntos} pts`;
+          }
+        }
+      });
+    });
+  }
+  aumentarPuntos($elemento) {
+    let puntos = parseInt($elemento.dataset.price);
+    this.players[this.turno].puntos += puntos;
+  }
 }
 
 const reglas = {
@@ -34,9 +52,17 @@ const reglas = {
   jaqueDoble: 5,
   jaqueTriple: 20,
 };
+const colores = {
+  rojo: "#bf3b43",
+  azul: "#4185bf",
+  amarillo: "#c09526",
+  verde: "#4e9161",
+};
 const $botones = document.querySelector(".hero");
 const $jugadores = document.querySelector(".jugadores");
 const $partida = document.querySelector(".partida");
+const $puntos = document.querySelectorAll(".puntos");
+const $piezas = document.querySelectorAll("#pieza");
 
 const $botonPartida = document.getElementById("partida");
 const $botonJugadores = document.getElementById("jugadores");
@@ -81,7 +107,6 @@ $botonPartida.addEventListener("click", () => {
         if (partida.players.length < 4) {
           player.classList.add("select");
           agregarJugador(player);
-          console.log(partida.players);
         }
       }
       if (partida.players.length == 4) {
@@ -98,12 +123,18 @@ $botonPartida.addEventListener("click", () => {
 
 $back.addEventListener("click", getBack);
 $start.addEventListener("click", startMatch);
+$piezas.forEach(($pieza) => {
+  $pieza.addEventListener("click", () => {
+    partida.aumentarPuntos($pieza);
+    partida.mostrarPuntos();
+    cambiarTurno();
+  });
+});
 
 fetch("assets/server.json")
   .then((datos) => datos.json())
   .then((datos) => {
     datos.jugadores.forEach((jugador) => {
-      console.log(jugador);
       jugadores.push(new Player(jugador));
     });
   });
@@ -114,7 +145,6 @@ function mostrarHTML(valor, jugador) {
 
 function agregarJugador(element) {
   let nombre = element.dataset.price;
-  console.log(nombre);
   jugadores.forEach((p) => {
     if (nombre == p.nombre) {
       partida.players.push(p);
@@ -143,12 +173,52 @@ function getBack() {
   partida.players = [];
   if (partida.start == true) {
     $partida.classList.add("none");
+    $partida.turno = 0;
     partida.start = false;
+    reiniciarPuntos();
   }
 }
 function startMatch() {
-  if (partida.players.length == 4) {
-    removerAdder($partida, $jugadores);
-    partida.start = true;
+  debugger;
+  removerAdder($partida, $jugadores);
+  partida.start = true;
+  ramdomArray(partida.players);
+  partida.mostrarPuntos();
+  $piezas.forEach(($pieza) => {
+    elegirColores(partida.turno, $pieza);
+  });
+}
+
+function ramdomArray(arreglo) {
+  arreglo.sort(() => Math.random() - 0.5);
+}
+
+function elegirColores(posicion, elemento) {
+  let color;
+  if (posicion == 0) {
+    color = colores.rojo;
   }
+  if (posicion == 1) {
+    color = colores.azul;
+  }
+  if (posicion == 2) {
+    color = colores.amarillo;
+  }
+  if (posicion == 3) {
+    color = colores.verde;
+  }
+  elemento.style.backgroundColor = color;
+}
+
+function cambiarTurno() {
+  partida.turno++;
+  if (partida.turno == 4) {
+    partida.turno = 0;
+  }
+  $piezas.forEach(($pieza) => {
+    elegirColores(partida.turno, $pieza);
+  });
+}
+function reiniciarPuntos() {
+  jugadores.forEach((player) => (player.puntos = 0));
 }
