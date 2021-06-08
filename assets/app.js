@@ -4,6 +4,7 @@ class Player {
     this.victorias = victorias;
     this.derrotas = derrotas;
     this.puntos = puntos;
+    this.isAlive = true;
   }
   mostrar() {
     return `
@@ -12,6 +13,9 @@ class Player {
       <p>${this.victorias}</p>
       <p>${this.derrotas}</p>
     </div>`;
+  }
+  showName() {
+    return `<i class="name">${this.nombre}</i>`;
   }
 }
 class Partida {
@@ -39,6 +43,18 @@ class Partida {
     let puntos = parseInt($elemento.dataset.price);
     this.players[this.turno].puntos += puntos;
   }
+  deadKing() {
+    $overlay.classList.add("is-active");
+    const $container = $overlay.children[1];
+    this.players.forEach(($player, posicion) => {
+      if (posicion != this.turno) {
+        if ($player.isAlive) {
+          $container.innerHTML += $player.showName();
+        }
+      }
+    });
+    jaqueMate();
+  }
 }
 
 const reglas = {
@@ -63,11 +79,15 @@ const $jugadores = document.querySelector(".jugadores");
 const $partida = document.querySelector(".partida");
 const $puntos = document.querySelectorAll(".puntos");
 const $piezas = document.querySelectorAll("#pieza");
+const $overlay = document.querySelector(".overlay");
+let $jaqueMate;
+let $king = document.querySelector(".fa-chess-king");
 
 const $botonPartida = document.getElementById("partida");
 const $botonJugadores = document.getElementById("jugadores");
 const $botonCrear = document.getElementById("crear");
 const $back = document.getElementById("back");
+const $back2 = document.querySelector(".back-king");
 const $start = document.querySelector(".start");
 
 const $lista = document.querySelector(".list");
@@ -122,13 +142,17 @@ $botonPartida.addEventListener("click", () => {
 });
 
 $back.addEventListener("click", getBack);
+$back2.addEventListener("click", () => {
+  $overlay.classList.remove("");
+});
 $start.addEventListener("click", startMatch);
 $piezas.forEach(($pieza) => {
   $pieza.addEventListener("click", () => {
-    partida.aumentarPuntos($pieza);
-    partida.mostrarPuntos();
-    cambiarTurno();
+    if (!$pieza.classList.contains("fa-chess-king")) nextOne($pieza);
   });
+});
+$king.addEventListener("click", () => {
+  partida.deadKing();
 });
 
 fetch("assets/server.json")
@@ -214,10 +238,64 @@ function cambiarTurno() {
   if (partida.turno == 4) {
     partida.turno = 0;
   }
+  isAlive();
   $piezas.forEach(($pieza) => {
     elegirColores(partida.turno, $pieza);
   });
 }
 function reiniciarPuntos() {
-  jugadores.forEach((player) => (player.puntos = 0));
+  jugadores.forEach((player) => {
+    player.puntos = 0;
+    player.isAlive = true;
+  });
+}
+
+function isAlive() {
+  debugger;
+  let nextPlayer = partida.players[partida.turno];
+  let nextPlayer2 = partida.players[partida.turno + 1];
+  if (partida.turno >= 4) {
+    nextPlayer = partida.players[0];
+  }
+  if (!nextPlayer.isAlive) {
+    partida.turno++;
+  }
+  if (partida.turno >= 4) {
+    nextPlayer2 = partida.players[0];
+  }
+  if (!nextPlayer.isAlive) {
+    partida.turno++;
+  }
+}
+
+function jaqueMate() {
+  $jaqueMate = document.querySelectorAll(".name");
+  $jaqueMate.forEach(($jaqueMate) => {
+    let nombre = $jaqueMate.textContent;
+    $jaqueMate.addEventListener("click", () => {
+      partida.players.forEach((e) => {
+        if (nombre == e.nombre) {
+          e.isAlive = false;
+          $overlay.classList.remove("is-active");
+          hideName();
+          nextOne($king);
+        }
+      });
+    });
+  });
+}
+
+function hideName() {
+  $overlay.innerHTML = `
+      <div class="backContainer">
+        <span id="back" class="icon-circle-left back-king"></span>
+      </div>
+      <div class="namePlayers"></div>
+    </div>      
+    `;
+}
+function nextOne(element) {
+  partida.aumentarPuntos(element);
+  partida.mostrarPuntos();
+  cambiarTurno();
 }

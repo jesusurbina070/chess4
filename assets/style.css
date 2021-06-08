@@ -43,8 +43,6 @@ span {
 #back {
   position: relative;
   font-size: 50px;
-  margin-left: 40px;
-  top: 50px;
   cursor: pointer;
 }
 
@@ -116,6 +114,8 @@ span {
 }
 
 .partida {
+  position: relative;
+  z-index: 1;
   display: flex;
   height: 100vh;
   align-items: center;
@@ -153,8 +153,36 @@ span {
   color: #ebe8cd;
   cursor: default;
 }
-
-/* azul: #4185bf
-rojo: #bf3b43
-naranja: #c09526
-verde: #4e9161 */
+.overlay {
+  height: 100%;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+.overlay.is-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.namePlayers {
+  display: grid;
+  grid-template-columns: 180px;
+}
+.name {
+  background: #ebe8cd;
+  font-size: 20px;
+  margin: 10px;
+  font-weight: bolder;
+}
+.backContainer {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+}
