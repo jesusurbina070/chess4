@@ -111,6 +111,7 @@ $botonPartida.addEventListener("click", () => {
     mostrarHTML($lista, jugador);
   });
   const players = document.querySelectorAll(".jugador");
+
   players.forEach((player) => {
     player.addEventListener("click", () => {
       if (player.classList.contains("select")) {
@@ -143,7 +144,9 @@ $botonPartida.addEventListener("click", () => {
 
 $back.addEventListener("click", getBack);
 $back2.addEventListener("click", () => {
-  $overlay.classList.remove("");
+  $overlay.classList.remove("is-active");
+  let container = $overlay.children[1];
+  container.innerHTML = "";
 });
 $start.addEventListener("click", startMatch);
 $piezas.forEach(($pieza) => {
@@ -235,37 +238,23 @@ function elegirColores(posicion, elemento) {
 
 function cambiarTurno() {
   partida.turno++;
-  if (partida.turno == 4) {
+  let nextPlayer = partida.players[partida.turno];
+  if (partida.turno >= 4) {
     partida.turno = 0;
+    nextPlayer = partida.players[partida.turno];
   }
-  isAlive();
   $piezas.forEach(($pieza) => {
     elegirColores(partida.turno, $pieza);
   });
+  if (!nextPlayer.isAlive) {
+    cambiarTurno();
+  }
 }
 function reiniciarPuntos() {
   jugadores.forEach((player) => {
     player.puntos = 0;
     player.isAlive = true;
   });
-}
-
-function isAlive() {
-  debugger;
-  let nextPlayer = partida.players[partida.turno];
-  let nextPlayer2 = partida.players[partida.turno + 1];
-  if (partida.turno >= 4) {
-    nextPlayer = partida.players[0];
-  }
-  if (!nextPlayer.isAlive) {
-    partida.turno++;
-  }
-  if (partida.turno >= 4) {
-    nextPlayer2 = partida.players[0];
-  }
-  if (!nextPlayer.isAlive) {
-    partida.turno++;
-  }
 }
 
 function jaqueMate() {
