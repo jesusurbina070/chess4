@@ -15,6 +15,9 @@ body {
   padding: 20px;
   height: auto;
 }
+.menu.none {
+  display: none;
+}
 .arrow {
   font-size: 20px;
   margin: 0 3px;
@@ -33,6 +36,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .hero.none {
   display: none;
 }
@@ -233,6 +237,9 @@ span {
   height: auto;
 }
 @media screen and (max-width: 767px) {
+  body {
+    padding: 20px;
+  }
   .botones {
     grid-template-columns: 200px;
     margin-bottom: 30px;
@@ -256,6 +263,9 @@ span {
   }
   .jaque {
     font-size: 18px;
+  }
+  .menu {
+    width: auto;
   }
 }
 @media screen and (max-width: 480px) {
@@ -291,6 +301,9 @@ span {
   }
 }
 @media screen and (max-width: 380px) {
+  i {
+    padding: 20px 25px;
+  }
   .barra {
     grid-template-columns: 120px 120px;
     grid: 5px;

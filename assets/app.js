@@ -99,6 +99,7 @@ const colores = {
   default: "#272522",
 };
 const $botones = document.querySelector(".hero");
+const $menu = document.querySelector(".menu");
 const $jugadores = document.querySelector(".jugadores");
 const $partida = document.querySelector(".partida");
 const $puntos = document.querySelectorAll(".puntos");
@@ -135,7 +136,7 @@ $botonJugadores.addEventListener("click", () => {
 
 $botonPartida.addEventListener("click", () => {
   removerAdder($jugadores, $botones);
-  $back.classList.remove("none");
+  $menu.classList.remove("none");
   partida = new Partida();
   jugadores.forEach((jugador) => {
     mostrarHTML($lista, jugador);
@@ -228,7 +229,7 @@ function removerAdder(addElement, removeElement) {
 
 function getBack() {
   removerAdder($botones, $jugadores);
-  $back.classList.add("none");
+  $menu.classList.add("none");
   $lista.innerHTML = `
   <div class="titulo-player">
     <h3>Selecciona</h3>
