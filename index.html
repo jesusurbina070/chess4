@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg" href="assets/img/tablero.svg" />
     <link rel="stylesheet" href="assets/style.css" />
     <link rel="stylesheet" href="assets/fonts/fuentes.css" />
@@ -17,13 +17,18 @@
         <i class="fas fa-play arrow"></i>
         <i class="fas fa-forward arrow"></i>
       </div>
-      <span id="back" class="fas fa-crown none"></span>
     </div>
 
     <section class="hero">
       <div class="botones">
         <i id="partida">
-          <img src="assets/img/peon.png" alt="" height="100px" width="100px" />
+          <img
+            class="img-peon"
+            src="assets/img/peon.png"
+            alt=""
+            height="100px"
+            width="100px"
+          />
           <p>Nueva Partida</p>
         </i>
         <i id="jugadores">
@@ -53,6 +58,8 @@
       <div class="barra">
         <i class="puntos">Player1</i>
         <i class="puntos">Player2</i>
+        <i class="puntos">Player3</i>
+        <i class="puntos">Player4</i>
       </div>
       <div class="piezas">
         <i id="pieza" class="fas fa-chess-pawn pieza" data-price="1"></i>
@@ -64,10 +71,6 @@
         <i id="pieza" class="jaque" data-price="5">Doble Jaque</i>
         <i id="pieza" class="jaque" data-price="20">Triple Jaque</i>
         <i id="pieza" class="jaque" data-price="0">Paso</i>
-      </div>
-      <div class="barra">
-        <i class="puntos">Player3</i>
-        <i class="puntos">Player4</i>
       </div>
     </section>
     <div class="overlay">

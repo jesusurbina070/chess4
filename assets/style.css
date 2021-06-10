@@ -2,7 +2,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0px;
+  display: flex;
+  flex-direction: column;
   background-color: #312e2b;
+  overflow-x: hidden;
 }
 .menu {
   display: flex;
@@ -164,13 +167,15 @@ span {
   color: #ebe8cd;
 }
 .barra {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px;
+  justify-content: center;
   align-items: center;
+  grid-gap: 20px;
+  margin: 20px 0px;
 }
+
 .puntos {
-  margin: 10px 20px;
   font-size: 20px;
   font-weight: bolder;
   color: #ebe8cd;
@@ -198,7 +203,6 @@ span {
   grid-template-columns: 180px;
 }
 .name {
-  background: #ebe8cd;
   font-size: 20px;
   margin: 10px;
   font-weight: bolder;
@@ -213,4 +217,104 @@ span {
 .menu i {
   background-color: none;
   color: #ebe8cd;
+}
+
+@media screen and (max-width: 1024px) {
+  .hero {
+    height: auto;
+  }
+  .botones {
+    grid-template-columns: 300px;
+    margin: 20px;
+    margin-bottom: 30px;
+  }
+}
+.partida {
+  height: auto;
+}
+@media screen and (max-width: 767px) {
+  .botones {
+    grid-template-columns: 200px;
+    margin-bottom: 30px;
+  }
+  .img-peon {
+    height: auto;
+    width: auto;
+  }
+  .list {
+    width: 70%;
+  }
+  .barra {
+    grid-template-columns: 110px 110px 110px 110px;
+    grid-gap: 10px;
+  }
+  .piezas {
+    grid-template-columns: 130px 130px 130px;
+  }
+  .pieza {
+    font-size: 40px;
+  }
+  .jaque {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 480px) {
+  body {
+    flex-flow: column-reverse;
+  }
+  .botones {
+    grid-template-columns: 150px;
+    margin: 0px;
+    margin-bottom: 30px;
+  }
+  span {
+    font-size: 50px;
+  }
+  .list {
+    width: 90%;
+  }
+  .barra {
+    grid-template-columns: 90px 90px 90px 90px;
+    grid: 5px;
+  }
+  .piezas {
+    grid-template-columns: 100px 100px 100px;
+  }
+  .pieza {
+    font-size: 30px;
+  }
+  .jaque {
+    font-size: 15px;
+  }
+  .puntos {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 380px) {
+  .barra {
+    grid-template-columns: 120px 120px;
+    grid: 5px;
+  }
+  .arrow {
+    font-size: 15px;
+    margin: 0px;
+    padding: 20px 25px;
+  }
+  .piezas {
+    grid-template-columns: 80px 80px 80px;
+    grid-gap: 8px;
+  }
+  .pieza {
+    font-size: 25px;
+  }
+  .jaque {
+    font-size: 13px;
+  }
+  .menu {
+    width: auto;
+    justify-content: center;
+  }
+  .move {
+    margin-left: 10px;
+  }
 }

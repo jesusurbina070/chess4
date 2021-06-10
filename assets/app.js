@@ -62,8 +62,11 @@ class Partida {
 }
 
 class registroPartida {
-  constructor(jugador, puntos, kill = null) {
-    (this.jugador = jugador), (this.puntos = puntos), (this.kill = kill);
+  constructor(jugador, puntos, movimiento, kill = null) {
+    (this.jugador = jugador),
+      (this.puntos = puntos),
+      (this.movimiento = movimiento),
+      (this.kill = kill);
   }
   retroceder() {
     partida.players[this.jugador].puntos -= this.puntos;
@@ -107,7 +110,6 @@ let $king = document.querySelector(".fa-chess-king");
 const $back = document.getElementById("back");
 const $moveContainer = document.querySelector(".move");
 const $move = document.querySelectorAll(".arrow");
-const $winner = document.querySelector(".fa-crown");
 
 const $botonPartida = document.getElementById("partida");
 const $botonJugadores = document.getElementById("jugadores");
@@ -178,18 +180,24 @@ $back2.addEventListener("click", () => {
 });
 $start.addEventListener("click", startMatch);
 $piezas.forEach(($pieza) => {
-  agregarEscuchador($pieza);
+  $pieza.addEventListener("click", activar);
 });
 
 $move.forEach(($boton) => {
   if ($boton.classList.contains("fa-backward")) {
-    $boton.addEventListener("click", regresar);
+    $boton.addEventListener("click", () => {
+      regresar();
+      if (!$boton.classList.contains("select")) {
+        $piezas.forEach(($pieza) => {
+          $pieza.removeEventListener("click", activar);
+        });
+        $move[1].addEventListener("click", handlePlay);
+        $boton.classList.add("select");
+      }
+    });
   }
   if ($boton.classList.contains("fa-forward")) {
     $boton.addEventListener("click", avanzar);
-  }
-  if ($boton.classList.contains("fa-play")) {
-    // $boton.addEventListener();
   }
 });
 
@@ -235,7 +243,6 @@ function getBack() {
   partida.players = [];
   if (partida.start == true) {
     $moveContainer.classList.add("none");
-    $winner.classList.add("none");
     $partida.classList.add("none");
     $partida.turno = 0;
     registro = [];
@@ -245,7 +252,6 @@ function getBack() {
 }
 function startMatch() {
   $moveContainer.classList.remove("none");
-  $winner.classList.remove("none");
   removerAdder($partida, $jugadores);
   partida.start = true;
   ramdomArray(partida.players);
@@ -299,7 +305,6 @@ function reiniciarPuntos() {
 
 function jaqueMate() {
   $jaqueMate = document.querySelectorAll(".name");
-
   $jaqueMate.forEach(($jaqueMate, p) => {
     let nombre = $jaqueMate.textContent;
     elegirColores(p, $jaqueMate);
@@ -307,7 +312,12 @@ function jaqueMate() {
       partida.players.forEach((e, p) => {
         if (nombre == e.nombre) {
           registro.push(
-            new registroPartida(partida.turno, parseInt($king.dataset.price), p)
+            new registroPartida(
+              partida.turno,
+              parseInt($king.dataset.price),
+              registro.length,
+              p
+            )
           );
           i = registro.length;
           e.isAlive = false;
@@ -334,29 +344,53 @@ function nextOne(element) {
   partida.mostrarPuntos();
   cambiarTurno();
 }
-function agregarEscuchador($pieza) {
-  $pieza.addEventListener("click", () => {
-    if ($pieza.classList.contains("fa-chess-king")) {
-      partida.deadKing();
-    } else {
-      registro.push(
-        new registroPartida(partida.turno, parseInt($pieza.dataset.price))
-      );
-      i = registro.length;
-      nextOne($pieza);
-    }
-  });
+
+function activar(event) {
+  if (event.target.classList.contains("fa-chess-king")) {
+    partida.deadKing();
+  } else {
+    registro.push(
+      new registroPartida(
+        partida.turno,
+        parseInt(event.target.dataset.price),
+        registro.length
+      )
+    );
+    i = registro.length;
+    nextOne(event.target);
+  }
 }
-function removerEscuchador($pieza) {}
+
 function regresar() {
-  if (i >= 1) {
-    registro[1 - i].retroceder();
-    i = i - 1;
+  if (i <= registro.length) {
+    if (!(i <= 0)) {
+      registro[i - 1].retroceder();
+      i = i - 1;
+    }
   }
 }
 function avanzar() {
+  debugger;
   if (i < registro.length) {
     i = i + 1;
-    registro[1 - i].avanzar();
+    registro[i - 1].avanzar();
+  }
+}
+
+function handlePlay() {
+  debugger;
+  $move[0].classList.remove("select");
+  play();
+  $piezas.forEach(($pieza) => {
+    $pieza.addEventListener("click", activar);
+  });
+  $move[1].removeEventListener("click", handlePlay);
+}
+function play() {
+  debugger;
+  if (!(i == registro.length)) {
+    let newArray = registro.slice(0, i);
+    registro = newArray;
+    i = registro.length;
   }
 }
