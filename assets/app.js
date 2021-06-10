@@ -308,7 +308,6 @@ function jaqueMate() {
   $jaqueMate = document.querySelectorAll(".name");
   $jaqueMate.forEach(($jaqueMate, p) => {
     let nombre = $jaqueMate.textContent;
-    elegirColores(p, $jaqueMate);
     $jaqueMate.addEventListener("click", () => {
       partida.players.forEach((e, p) => {
         if (nombre == e.nombre) {
