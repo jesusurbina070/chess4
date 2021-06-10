@@ -362,7 +362,6 @@ function regresar() {
   }
 }
 function avanzar() {
-  debugger;
   if (i < registro.length) {
     i = i + 1;
     registro[i - 1].avanzar();
@@ -370,7 +369,6 @@ function avanzar() {
 }
 
 function handlePlay() {
-  debugger;
   $move[0].classList.remove("select");
   play();
   $piezas.forEach(($pieza) => {
@@ -379,7 +377,6 @@ function handlePlay() {
   $move[1].removeEventListener("click", handlePlay);
 }
 function play() {
-  debugger;
   if (!(i == registro.length)) {
     let newArray = registro.slice(0, i);
     registro = newArray;
