@@ -174,11 +174,7 @@ $botonPartida.addEventListener("click", () => {
 });
 
 $back.addEventListener("click", getBack);
-$back2.addEventListener("click", () => {
-  $overlay.classList.remove("is-active");
-  let container = $overlay.children[1];
-  container.innerHTML = "";
-});
+$back2.addEventListener("click", hideName);
 $start.addEventListener("click", startMatch);
 $piezas.forEach(($pieza) => {
   $pieza.addEventListener("click", activar);
@@ -331,13 +327,9 @@ function jaqueMate() {
 }
 
 function hideName() {
-  $overlay.innerHTML = `
-      <div class="backContainer">
-        <span id="back" class="icon-circle-left back-king"></span>
-      </div>
-      <div class="namePlayers"></div>
-    </div>      
-    `;
+  $overlay.classList.remove("is-active");
+  let container = $overlay.children[1];
+  container.innerHTML = "";
 }
 function nextOne(element) {
   partida.aumentarPuntos(element);

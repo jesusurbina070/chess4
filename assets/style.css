@@ -226,6 +226,9 @@ span {
 }
 
 @media screen and (max-width: 1024px) {
+  body {
+    padding: 20px;
+  }
   .hero {
     height: auto;
   }
@@ -239,9 +242,6 @@ span {
   height: auto;
 }
 @media screen and (max-width: 767px) {
-  body {
-    padding: 20px;
-  }
   .botones {
     grid-template-columns: 200px;
     margin-bottom: 30px;
