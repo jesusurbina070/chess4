@@ -29,6 +29,14 @@ body {
 .fa-crown.none {
   display: none;
 }
+.fa-plus-circle {
+  font-size: 48px;
+  cursor: pointer;
+}
+
+.fa-plus-circle.none {
+  display: none;
+}
 
 .hero {
   height: calc(100vh - 40px);
@@ -95,16 +103,21 @@ span {
   width: 50%;
 }
 .start {
-  display: none;
+  display: auto;
   margin: 20px;
   background: #ebe8cd;
   color: #272522;
   font-weight: bolder;
   border: none;
 }
-.start.is-active {
-  display: block;
+
+.start-buttons {
+  display: flex;
 }
+
+/* .start-buttons.is-active {
+  display: flex;
+} */
 
 .titulo-player {
   padding: 10px 20px;
@@ -273,6 +286,7 @@ span {
 @media screen and (max-width: 480px) {
   body {
     flex-flow: column-reverse;
+    padding: 0px;
   }
   .botones {
     grid-template-columns: 150px;
@@ -291,6 +305,7 @@ span {
   }
   .piezas {
     grid-template-columns: 100px 100px 100px;
+    margin-bottom: 20px;
   }
   .pieza {
     font-size: 30px;
@@ -300,6 +315,15 @@ span {
   }
   .puntos {
     font-size: 15px;
+  }
+  #back {
+    font-size: 38px;
+  }
+  .fa-plus-circle {
+    font-size: 38px;
+  }
+  .menu {
+    padding: 0;
   }
 }
 @media screen and (max-width: 380px) {
@@ -330,6 +354,6 @@ span {
     justify-content: center;
   }
   .move {
-    margin-left: 10px;
+    margin: 0px 10px;
   }
 }

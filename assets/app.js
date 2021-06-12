@@ -37,6 +37,9 @@ class Partida {
               e.textContent = `${elemento.puntos} pts`;
             }
           } else {
+            if (elemento.puntos > 0) {
+              e.textContent = `${elemento.puntos} pts`;
+            }
             e.style.backgroundColor = colores.default;
           }
         }
@@ -62,11 +65,8 @@ class Partida {
 }
 
 class registroPartida {
-  constructor(jugador, puntos, movimiento, kill = null) {
-    (this.jugador = jugador),
-      (this.puntos = puntos),
-      (this.movimiento = movimiento),
-      (this.kill = kill);
+  constructor(jugador, puntos, kill = null) {
+    (this.jugador = jugador), (this.puntos = puntos), (this.kill = kill);
   }
   retroceder() {
     partida.players[this.jugador].puntos -= this.puntos;
@@ -109,15 +109,17 @@ let $jaqueMate;
 let $king = document.querySelector(".fa-chess-king");
 
 const $back = document.getElementById("back");
+const $back2 = document.querySelector(".back-king");
 const $moveContainer = document.querySelector(".move");
 const $move = document.querySelectorAll(".arrow");
+const $plus = document.querySelector(".fa-plus-circle");
 
 const $botonPartida = document.getElementById("partida");
 const $botonJugadores = document.getElementById("jugadores");
 const $botonCrear = document.getElementById("crear");
 
-const $back2 = document.querySelector(".back-king");
-const $start = document.querySelector(".start");
+const $start = document.querySelectorAll(".start");
+const $startContainer = document.querySelector(".start-buttons");
 
 const $lista = document.querySelector(".list");
 
@@ -162,11 +164,11 @@ $botonPartida.addEventListener("click", () => {
         }
       }
       if (partida.players.length == 4) {
-        $start.classList.add("is-active");
+        $startContainer.classList.add("is-active");
       }
       if (partida.players.length < 4) {
-        if ($start.classList.contains("is-active")) {
-          $start.classList.remove("is-active");
+        if ($startContainer.classList.contains("is-active")) {
+          $startContainer.classList.remove("is-active");
         }
       }
     });
@@ -175,7 +177,9 @@ $botonPartida.addEventListener("click", () => {
 
 $back.addEventListener("click", getBack);
 $back2.addEventListener("click", hideName);
-$start.addEventListener("click", startMatch);
+$start.forEach(($button) => {
+  $button.addEventListener("click", startMatch);
+});
 $piezas.forEach(($pieza) => {
   $pieza.addEventListener("click", activar);
 });
@@ -193,9 +197,30 @@ $move.forEach(($boton) => {
       }
     });
   }
+  if ($boton.classList.contains("fa-play")) {
+    $boton.addEventListener("click", () => {
+      if ($plus.classList.contains("select")) {
+        $piezas.forEach(($pieza) => {
+          $pieza.removeEventListener("click", sumar);
+          $pieza.addEventListener("click", activar);
+        });
+        $plus.classList.remove("select");
+        partida.mostrarPuntos();
+        cambiarTurno();
+      }
+    });
+  }
   if ($boton.classList.contains("fa-forward")) {
     $boton.addEventListener("click", avanzar);
   }
+});
+
+$plus.addEventListener("click", () => {
+  $piezas.forEach(($pieza) => {
+    $pieza.removeEventListener("click", activar);
+    $pieza.addEventListener("click", sumar);
+  });
+  $plus.classList.add("select");
 });
 
 fetch("assets/server.json")
@@ -236,7 +261,7 @@ function getBack() {
           <p>Derrotas</p>
   </div>
   `;
-  $start.classList.remove("is-active");
+  $startContainer.classList.remove("is-active");
   partida.players = [];
   if (partida.start == true) {
     $moveContainer.classList.add("none");
@@ -247,11 +272,14 @@ function getBack() {
     reiniciarPuntos();
   }
 }
-function startMatch() {
+function startMatch(event) {
   $moveContainer.classList.remove("none");
+  $plus.classList.remove("none");
   removerAdder($partida, $jugadores);
   partida.start = true;
-  ramdomArray(partida.players);
+  if (event.target.textContent == "aleatorio") {
+    ramdomArray(partida.players);
+  }
   partida.mostrarPuntos();
   $piezas.forEach(($pieza) => {
     elegirColores(partida.turno, $pieza);
@@ -302,28 +330,27 @@ function reiniciarPuntos() {
 
 function jaqueMate() {
   $jaqueMate = document.querySelectorAll(".name");
-  $jaqueMate.forEach(($jaqueMate, p) => {
+  $jaqueMate.forEach(($jaqueMate, posicion) => {
     let nombre = $jaqueMate.textContent;
     $jaqueMate.addEventListener("click", () => {
       partida.players.forEach((e, p) => {
         if (nombre == e.nombre) {
-          registro.push(
-            new registroPartida(
-              partida.turno,
-              parseInt($king.dataset.price),
-              registro.length,
-              p
-            )
-          );
+          crearRegistro(partida.turno, parseInt($king.dataset.price), p);
           i = registro.length;
           e.isAlive = false;
           $overlay.classList.remove("is-active");
           hideName();
-          nextOne($king);
+          if (!$plus.classList.contains("select")) {
+            nextOne($king);
+          }
         }
       });
     });
   });
+}
+
+function crearRegistro(posicion, puntos, dead = null) {
+  registro.push(new registroPartida(posicion, puntos, dead));
 }
 
 function hideName() {
@@ -341,13 +368,7 @@ function activar(event) {
   if (event.target.classList.contains("fa-chess-king")) {
     partida.deadKing();
   } else {
-    registro.push(
-      new registroPartida(
-        partida.turno,
-        parseInt(event.target.dataset.price),
-        registro.length
-      )
-    );
+    crearRegistro(partida.turno, parseInt(event.target.dataset.price));
     i = registro.length;
     nextOne(event.target);
   }
@@ -379,10 +400,14 @@ function handlePlay() {
   $move[1].removeEventListener("click", handlePlay);
 }
 function play() {
-  debugger;
   if (!(i == registro.length)) {
     let newArray = registro.slice(0, i);
     registro = newArray;
     i = registro.length;
   }
+}
+
+function sumar(event) {
+  if (event.target.classList.contains("fa-chess-king")) partida.deadKing();
+  else partida.aumentarPuntos(event.target);
 }
