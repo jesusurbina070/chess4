@@ -24,6 +24,8 @@ class Partida {
     this.players = [];
     this.start = false;
     this.turno = 0;
+    this.acumulador = 0;
+    this.mates = [];
   }
   Partida() {}
   mostrarPuntos() {
@@ -195,6 +197,11 @@ $move.forEach(($boton) => {
         $move[1].addEventListener("click", handlePlay);
         $boton.classList.add("select");
       }
+      if ($plus.classList.contains("select")) $plus.classList.remove("select");
+      if ($king.classList.contains("is-active")) {
+        $king.classList.remove("is-active");
+      }
+      partida.acumulador = 0;
     });
   }
   if ($boton.classList.contains("fa-play")) {
@@ -204,6 +211,18 @@ $move.forEach(($boton) => {
           $pieza.removeEventListener("click", sumar);
           $pieza.addEventListener("click", activar);
         });
+        if ($king.classList.contains("is-active")) {
+          debugger;
+          let last = partida.mates.length - 1;
+          crearRegistro(partida.turno, partida.acumulador, partida.mates[last]);
+          i = registro.length;
+          $king.classList.remove("is-active");
+        } else {
+          crearRegistro(partida.turno, partida.acumulador);
+          i = registro.length;
+        }
+        partida.players[partida.turno].puntos = partida.acumulador;
+        partida.acumulador = 0;
         $plus.classList.remove("select");
         partida.mostrarPuntos();
         cambiarTurno();
@@ -335,13 +354,17 @@ function jaqueMate() {
     $jaqueMate.addEventListener("click", () => {
       partida.players.forEach((e, p) => {
         if (nombre == e.nombre) {
-          crearRegistro(partida.turno, parseInt($king.dataset.price), p);
           i = registro.length;
           e.isAlive = false;
+          partida.mates.push(p);
           $overlay.classList.remove("is-active");
           hideName();
           if (!$plus.classList.contains("select")) {
+            crearRegistro(partida.turno, parseInt($king.dataset.price), p);
             nextOne($king);
+          } else {
+            partida.acumulador += parseInt($king.dataset.price);
+            $king.classList.add("is-active");
           }
         }
       });
@@ -409,5 +432,8 @@ function play() {
 
 function sumar(event) {
   if (event.target.classList.contains("fa-chess-king")) partida.deadKing();
-  else partida.aumentarPuntos(event.target);
+  else {
+    let puntos = parseInt(event.target.dataset.price);
+    partida.acumulador += puntos;
+  }
 }
