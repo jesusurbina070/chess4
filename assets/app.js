@@ -406,7 +406,6 @@ function regresar() {
   }
 }
 function avanzar() {
-  debugger;
   if (i < registro.length) {
     i = i + 1;
     registro[i - 1].avanzar();
