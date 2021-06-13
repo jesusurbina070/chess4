@@ -212,7 +212,6 @@ $move.forEach(($boton) => {
           $pieza.addEventListener("click", activar);
         });
         if ($king.classList.contains("is-active")) {
-          debugger;
           let last = partida.mates.length - 1;
           crearRegistro(partida.turno, partida.acumulador, partida.mates[last]);
           i = registro.length;
@@ -221,7 +220,7 @@ $move.forEach(($boton) => {
           crearRegistro(partida.turno, partida.acumulador);
           i = registro.length;
         }
-        partida.players[partida.turno].puntos = partida.acumulador;
+        partida.players[partida.turno].puntos += partida.acumulador;
         partida.acumulador = 0;
         $plus.classList.remove("select");
         partida.mostrarPuntos();
