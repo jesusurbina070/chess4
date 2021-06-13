@@ -284,6 +284,7 @@ function getBack() {
   partida.players = [];
   if (partida.start == true) {
     $moveContainer.classList.add("none");
+    $plus.classList.add("none");
     $partida.classList.add("none");
     $partida.turno = 0;
     registro = [];

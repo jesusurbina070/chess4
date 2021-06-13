@@ -112,12 +112,12 @@ span {
 }
 
 .start-buttons {
-  display: flex;
+  display: none;
 }
 
-/* .start-buttons.is-active {
+.start-buttons.is-active {
   display: flex;
-} */
+}
 
 .titulo-player {
   padding: 10px 20px;
@@ -357,11 +357,10 @@ span {
     margin: 0px 10px;
   }
 
-  .puntos:nth-of-type(3){
+  .puntos:nth-of-type(3) {
     grid-column-start: 2;
   }
-  .puntos:nth-of-type(4){
+  .puntos:nth-of-type(4) {
     grid-row-start: 2;
   }
-
 }
