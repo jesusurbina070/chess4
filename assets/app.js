@@ -207,24 +207,30 @@ $move.forEach(($boton) => {
   if ($boton.classList.contains("fa-play")) {
     $boton.addEventListener("click", () => {
       if ($plus.classList.contains("select")) {
-        $piezas.forEach(($pieza) => {
-          $pieza.removeEventListener("click", sumar);
-          $pieza.addEventListener("click", activar);
-        });
-        if ($king.classList.contains("is-active")) {
-          let last = partida.mates.length - 1;
-          crearRegistro(partida.turno, partida.acumulador, partida.mates[last]);
-          i = registro.length;
-          $king.classList.remove("is-active");
-        } else {
-          crearRegistro(partida.turno, partida.acumulador);
-          i = registro.length;
+        if (partida.acumulador > 0) {
+          $piezas.forEach(($pieza) => {
+            $pieza.removeEventListener("click", sumar);
+            $pieza.addEventListener("click", activar);
+          });
+          if ($king.classList.contains("is-active")) {
+            let last = partida.mates.length - 1;
+            crearRegistro(
+              partida.turno,
+              partida.acumulador,
+              partida.mates[last]
+            );
+            i = registro.length;
+            $king.classList.remove("is-active");
+          } else {
+            crearRegistro(partida.turno, partida.acumulador);
+            i = registro.length;
+          }
+          partida.players[partida.turno].puntos += partida.acumulador;
+          partida.acumulador = 0;
+          $plus.classList.remove("select");
+          partida.mostrarPuntos();
+          cambiarTurno();
         }
-        partida.players[partida.turno].puntos += partida.acumulador;
-        partida.acumulador = 0;
-        $plus.classList.remove("select");
-        partida.mostrarPuntos();
-        cambiarTurno();
       }
     });
   }
@@ -354,17 +360,19 @@ function jaqueMate() {
     $jaqueMate.addEventListener("click", () => {
       partida.players.forEach((e, p) => {
         if (nombre == e.nombre) {
-          i = registro.length;
           e.isAlive = false;
           partida.mates.push(p);
           $overlay.classList.remove("is-active");
           hideName();
           if (!$plus.classList.contains("select")) {
             crearRegistro(partida.turno, parseInt($king.dataset.price), p);
+            i = registro.length;
             nextOne($king);
           } else {
             partida.acumulador += parseInt($king.dataset.price);
             $king.classList.add("is-active");
+            $king.classList.add("select");
+            $king.style.backgroundColor = colores.default;
           }
         }
       });
@@ -430,9 +438,31 @@ function play() {
 }
 
 function sumar(event) {
-  if (event.target.classList.contains("fa-chess-king")) partida.deadKing();
-  else {
-    let puntos = parseInt(event.target.dataset.price);
-    partida.acumulador += puntos;
+  if (event.target.classList.contains("fa-chess-king")) {
+    if (event.target.classList.contains("select")) {
+      partida.acumulador -= parseInt(event.target.dataset.price);
+      event.target.classList.remove("select");
+      elegirColores(partida.turno, event.target);
+      let lastLoser = partida.mates.length - 1;
+      partida.players[partida.mates[lastLoser]].isAlive = true;
+      partida.mates.pop();
+    } else {
+      partida.deadKing();
+    }
+  } else {
+    if (!event.target.classList.contains("select")) {
+      let puntos = parseInt(event.target.dataset.price);
+      partida.acumulador += puntos;
+    } else {
+      let puntos = parseInt(event.target.dataset.price);
+      partida.acumulador -= puntos;
+    }
+    if (event.target.classList.contains("select")) {
+      elegirColores(partida.turno, event.target);
+      event.target.classList.remove("select");
+    } else {
+      event.target.style.backgroundColor = colores.default;
+      event.target.classList.add("select");
+    }
   }
 }
