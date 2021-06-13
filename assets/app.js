@@ -207,7 +207,7 @@ $move.forEach(($boton) => {
   if ($boton.classList.contains("fa-play")) {
     $boton.addEventListener("click", () => {
       if ($plus.classList.contains("select")) {
-        if (partida.acumulador > 0) {
+        if (partida.acumulador) {
           $piezas.forEach(($pieza) => {
             $pieza.removeEventListener("click", sumar);
             $pieza.addEventListener("click", activar);
@@ -227,6 +227,11 @@ $move.forEach(($boton) => {
           }
           partida.players[partida.turno].puntos += partida.acumulador;
           partida.acumulador = 0;
+          $piezas.forEach(($pieza) => {
+            if ($pieza.classList.contains("select")) {
+              $pieza.classList.remove("select");
+            }
+          });
           $plus.classList.remove("select");
           partida.mostrarPuntos();
           cambiarTurno();
@@ -421,7 +426,6 @@ function avanzar() {
 }
 
 function handlePlay() {
-  debugger;
   $move[0].classList.remove("select");
   play();
   $piezas.forEach(($pieza) => {
@@ -439,10 +443,10 @@ function play() {
 
 function sumar(event) {
   if (event.target.classList.contains("fa-chess-king")) {
-    if (event.target.classList.contains("select")) {
-      partida.acumulador -= parseInt(event.target.dataset.price);
-      event.target.classList.remove("select");
-      elegirColores(partida.turno, event.target);
+    if ($king.classList.contains("select")) {
+      partida.acumulador -= parseInt($king.dataset.price);
+      $king.classList.remove("select");
+      elegirColores(partida.turno, $king);
       let lastLoser = partida.mates.length - 1;
       partida.players[partida.mates[lastLoser]].isAlive = true;
       partida.mates.pop();
@@ -453,16 +457,13 @@ function sumar(event) {
     if (!event.target.classList.contains("select")) {
       let puntos = parseInt(event.target.dataset.price);
       partida.acumulador += puntos;
+      event.target.style.backgroundColor = colores.default;
+      event.target.classList.add("select");
     } else {
       let puntos = parseInt(event.target.dataset.price);
       partida.acumulador -= puntos;
-    }
-    if (event.target.classList.contains("select")) {
       elegirColores(partida.turno, event.target);
       event.target.classList.remove("select");
-    } else {
-      event.target.style.backgroundColor = colores.default;
-      event.target.classList.add("select");
     }
   }
 }
